@@ -2,6 +2,7 @@
 namespace KREDA\Sphere\Common;
 
 use KREDA\Sphere\Common\Extension\Debugger;
+use KREDA\Sphere\Common\Extension\ModHex;
 use Markdownify\Converter;
 use MOC\V\Component\Database\Database;
 use MOC\V\Component\Database\Exception\DatabaseException;
@@ -22,6 +23,17 @@ abstract class AbstractExtension
 
     /** @var null|\MOC\V\Core\HttpKernel\Component\IBridgeInterface $extensionRequestCache */
     private static $extensionRequestCache = null;
+
+    /**
+     * @param string $String
+     *
+     * @return ModHex
+     */
+    final public static function extensionModHex( $String )
+    {
+
+        return ModHex::withString( $String );
+    }
 
     /**
      * @return Debugger

@@ -1,15 +1,13 @@
 <?php
 namespace KREDA\Sphere\Application\Management;
 
+use KREDA\Sphere\Application\Gatekeeper\Service\Consumer\Entity\TblConsumer;
 use KREDA\Sphere\Application\Management\Frontend\Campus\Campus;
 use KREDA\Sphere\Application\Management\Frontend\Group\Group;
 use KREDA\Sphere\Application\Management\Frontend\Mission\Mission;
 use KREDA\Sphere\Application\Management\Frontend\Period\Period;
 use KREDA\Sphere\Application\Management\Frontend\PersonalData\PersonalData;
 use KREDA\Sphere\Application\Management\Frontend\Subject\Subject;
-use KREDA\Sphere\Application\Management\Service\Address;
-use KREDA\Sphere\Application\Management\Service\Education;
-use KREDA\Sphere\Application\Management\Service\Person;
 use KREDA\Sphere\Client\Component\Element\Repository\Content\Stage;
 use KREDA\Sphere\Client\Component\Parameter\Repository\Icon\BriefcaseIcon;
 use KREDA\Sphere\Client\Component\Parameter\Repository\Icon\BuildingIcon;
@@ -159,30 +157,36 @@ class Management extends AbstractApplication
     }
 
     /**
+     * @param TblConsumer $tblConsumer
+     *
      * @return Service\Education
      */
-    public static function serviceEducation()
+    public static function serviceEducation( TblConsumer $tblConsumer = null )
     {
 
-        return Education::getApi();
+        return Service\Education::getApi( $tblConsumer );
     }
 
     /**
+     * @param TblConsumer $tblConsumer
+     *
      * @return Service\Person
      */
-    public static function servicePerson()
+    public static function servicePerson( TblConsumer $tblConsumer = null )
     {
 
-        return Person::getApi();
+        return Service\Person::getApi( $tblConsumer );
     }
 
     /**
+     * @param TblConsumer $tblConsumer
+     *
      * @return Service\Address
      */
-    public static function serviceAddress()
+    public static function serviceAddress( TblConsumer $tblConsumer = null )
     {
 
-        return Address::getApi();
+        return Service\Address::getApi( $tblConsumer );
     }
 
     /**
