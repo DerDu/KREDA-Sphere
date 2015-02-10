@@ -2,6 +2,9 @@
 namespace KREDA\Sphere\Application\Management;
 
 use KREDA\Sphere\Application\Management\Frontend\Campus\Campus;
+use KREDA\Sphere\Application\Management\Frontend\Group\Group;
+use KREDA\Sphere\Application\Management\Frontend\Mission\Mission;
+use KREDA\Sphere\Application\Management\Frontend\Period\Period;
 use KREDA\Sphere\Application\Management\Frontend\PersonalData\PersonalData;
 use KREDA\Sphere\Application\Management\Frontend\Subject\Subject;
 use KREDA\Sphere\Application\Management\Service\Address;
@@ -183,13 +186,40 @@ class Management extends AbstractApplication
     }
 
     /**
-     * @return Stage
+     * @return Subject
      */
     public function frontendEducationSubject()
     {
 
         $this->setupModuleNavigation();
         return Subject::guiSubject();
+    }
+
+    /**
+     * @return Group
+     */
+    public function guiEducationGroup()
+    {
+
+        $this->setupModuleNavigation();
+        return Group::guiGroup();
+    }
+
+    /**
+     * @return Period
+     */
+    public function guiEducationPeriod()
+    {
+
+        $this->setupModuleNavigation();
+        return Period::guiPeriod();
+    }
+
+    public function guiEducationMission()
+    {
+
+        $this->setupModuleNavigation();
+        return Mission::guiMission();
     }
 
     protected function setupModuleNavigation()

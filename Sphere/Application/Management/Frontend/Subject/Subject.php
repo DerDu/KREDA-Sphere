@@ -21,7 +21,7 @@ class Subject extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Fächer' );
         $View->setDescription( '' );
-        $View->setMessage( '' );
+        $View->setMessage( 'Der Inhalt folgt noch.' );
         $View->setContent( '' );
         return $View;
     }
