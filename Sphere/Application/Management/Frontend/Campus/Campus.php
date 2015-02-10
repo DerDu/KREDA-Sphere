@@ -19,6 +19,10 @@ class Campus extends AbstractFrontend
     {
 
         $View = new Stage();
+        $View->setTitle('');
+        $View->setDescription('');
+        $View->setMessage('');
+        $View->setContent('');
         return $View;
     }
 
