@@ -202,27 +202,32 @@ class PersonalData extends AbstractFrontend
         $View->setDescription( 'Lehrer' );
         // $PersonList = Management::servicePerson()->entityPersonAll(); // Ersetzt durch:
 
-        $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
-            Gatekeeper::serviceAccount()->entityAccountTypByName( 'Lehrer' )
-        );
+        $available = Gatekeeper::serviceAccount()->entityAccountTypByName( $View->getDescription() );
+
+         if (!Empty($available)) {
+
+             $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                 Gatekeeper::serviceAccount()->entityAccountTypByName( $View->getDescription() )
+             );
 
 
-        array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+             array_walk($PersonList, function (TblPerson &$V, $I, $B) {
 
-            $_REQUEST['Id'] = $V->getId();
-            $V->Option = new FormDefault(
-                new GridFormGroup(
-                    new GridFormRow(new GridFormCol(array(
-                        new InputHidden('Id'),
-                        new ButtonSubmitPrimary('Öffnen')
-                    )))
-                ),
-                null,
-                $B . '/Sphere/Management/Person/Teacher/Detail'
-            );
+                 $_REQUEST['Id'] = $V->getId();
+                 $V->Option = new FormDefault(
+                     new GridFormGroup(
+                         new GridFormRow(new GridFormCol(array(
+                             new InputHidden('Id'),
+                             new ButtonSubmitPrimary('Öffnen')
+                         )))
+                     ),
+                     null,
+                     $B . '/Sphere/Management/Person/Teacher/Detail'
+                 );
 
-        }, self::getUrlBase());
-        $View->setContent(new TableData($PersonList));
+             }, self::getUrlBase());
+             $View->setContent(new TableData($PersonList));
+         }
         $View->addButton( '/Sphere/Management/Person/Teacher/Create', 'Lehrer hinzufügen' );
         return $View;
     }

@@ -61,6 +61,11 @@ class Stage extends AbstractShell implements IElementInterface
         return $this;
     }
 
+    public function getDescription()
+    {
+        return $this->Description;
+    }
+
 
     /**
      * @return string
