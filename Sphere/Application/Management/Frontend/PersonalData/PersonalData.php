@@ -88,37 +88,46 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Schüler' );
-        $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
-            Gatekeeper::serviceAccount()->entityAccountTypByName( 'Schüler' )
-        );
 
-        array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName('Schüler') !== false ) { // Wenn Rolle gefunden
 
-            $_REQUEST['Id'] = $V->getId();
-            $V->Option = new FormDefault(
-                new GridFormGroup(
-                    new GridFormRow( new GridFormCol( array(
-                        new InputHidden( 'Id' ),
-                        new ButtonSubmitPrimary( 'Öffnen' )
-                    ) ) )
-                ),
-                null,
-                $B.'/Sphere/Management/Person/Student/Detail'
-            );
+            if (Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Schüler')) !== false ) // Wenn Person gefunden
+            {
 
-            $V->FullName = $V->getFirstName().' '.$V->getMiddleName().' '.$V->getLastName();
-        }, self::getUrlBase() );
-        $View->setContent( new TableData( $PersonList, null, array(
-            //'Id' => 'Id',
-            'Salutation' => 'Anrede',
-            //'FirstName' => 'FirstName',
-            'FullName'   => 'Name',
-            //'MiddleName' => 'MiddleName',
-            //'LastName' => 'LastName',
-            'Gender'     => 'Gender',
-            'Birthday'   => 'Birthday',
-            'Option'     => 'Option'
-        ) ) );
+                $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Schüler')
+                );
+
+                array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+
+                    $_REQUEST['Id'] = $V->getId();
+                    $V->Option = new FormDefault(
+                        new GridFormGroup(
+                            new GridFormRow(new GridFormCol(array(
+                                new InputHidden('Id'),
+                                new ButtonSubmitPrimary('Öffnen')
+                            )))
+                        ),
+                        null,
+                        $B . '/Sphere/Management/Person/Student/Detail'
+                    );
+
+                    $V->FullName = $V->getFirstName() . ' ' . $V->getMiddleName() . ' ' . $V->getLastName();
+                }, self::getUrlBase());
+                $View->setContent(new TableData($PersonList, null, array(
+                    //'Id' => 'Id',
+                    'Salutation' => 'Anrede',
+                    //'FirstName' => 'FirstName',
+                    'FullName' => 'Name',
+                    //'MiddleName' => 'MiddleName',
+                    //'LastName' => 'LastName',
+                    'Gender' => 'Gender',
+                    'Birthday' => 'Birthday',
+                    'Option' => 'Option'
+                )));
+            }
+        }
         $View->addButton( '/Sphere/Management/Person/Student/Create', 'Schüler hinzufügen' );
         $View->addButton( '/Sphere/Management/Person/Student/Import', 'Schüler importieren' );
         return $View;
@@ -200,34 +209,36 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Lehrer' );
-        // $PersonList = Management::servicePerson()->entityPersonAll(); // Ersetzt durch:
 
-        $available = Gatekeeper::serviceAccount()->entityAccountTypByName( $View->getDescription() );
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName('Lehrer') !== false ) {
 
-         if (!Empty($available)) {
-
-             $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
-                 Gatekeeper::serviceAccount()->entityAccountTypByName( $View->getDescription() )
-             );
+            if(Management::servicePerson()->entityPersonAllByAccountType(
+                Gatekeeper::serviceAccount()->entityAccountTypByName('Lehrer')) !== false ){
 
 
-             array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+                $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Lehrer')
+                );
 
-                 $_REQUEST['Id'] = $V->getId();
-                 $V->Option = new FormDefault(
-                     new GridFormGroup(
-                         new GridFormRow(new GridFormCol(array(
-                             new InputHidden('Id'),
-                             new ButtonSubmitPrimary('Öffnen')
-                         )))
-                     ),
-                     null,
-                     $B . '/Sphere/Management/Person/Teacher/Detail'
-                 );
 
-             }, self::getUrlBase());
-             $View->setContent(new TableData($PersonList));
-         }
+                array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+
+                    $_REQUEST['Id'] = $V->getId();
+                    $V->Option = new FormDefault(
+                        new GridFormGroup(
+                            new GridFormRow(new GridFormCol(array(
+                                new InputHidden('Id'),
+                                new ButtonSubmitPrimary('Öffnen')
+                            )))
+                        ),
+                        null,
+                        $B . '/Sphere/Management/Person/Teacher/Detail'
+                    );
+
+                }, self::getUrlBase());
+                $View->setContent(new TableData($PersonList));
+            }
+        }
         $View->addButton( '/Sphere/Management/Person/Teacher/Create', 'Lehrer hinzufügen' );
         return $View;
     }
@@ -241,24 +252,33 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle('Personen');
         $View->setDescription('Sorgeberechtigte');
-        $PersonList = Management::servicePerson()->entityPersonAll();
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName('Sorgeberechtigte') !== false ) {
 
-        array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+            if (Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Sorgeberechtigte')) !== false ) {
 
-            $_REQUEST['Id'] = $V->getId();
-            $V->Option = new FormDefault(
-                new GridFormGroup(
-                    new GridFormRow(new GridFormCol(array(
-                        new InputHidden('Id'),
-                        new ButtonSubmitPrimary('Öffnen')
-                    )))
-                ),
-                null,
-                $B . '/Sphere/Management/Person/Guardian/Detail'
-            );
+                $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Sorgeberechtigte')
+                );
 
-        }, self::getUrlBase());
-        $View->setContent(new TableData($PersonList));
+                array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+
+                    $_REQUEST['Id'] = $V->getId();
+                    $V->Option = new FormDefault(
+                        new GridFormGroup(
+                            new GridFormRow(new GridFormCol(array(
+                                new InputHidden('Id'),
+                                new ButtonSubmitPrimary('Öffnen')
+                            )))
+                        ),
+                        null,
+                        $B . '/Sphere/Management/Person/Guardian/Detail'
+                    );
+
+                }, self::getUrlBase());
+                $View->setContent(new TableData($PersonList));
+            }
+        }
         $View->addButton( '/Sphere/Management/Person/Guardian/Create', 'Sorgeberechtigte hinzufügen' );
         return $View;
     }
@@ -272,24 +292,33 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Verwaltung' );
-        $PersonList = Management::servicePerson()->entityPersonAll();
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName('Verwaltung') !== false ) {
 
-        array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
+            if (Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Verwaltung')) !== false ) {
 
-            $_REQUEST['Id'] = $V->getId();
-            $V->Option = new FormDefault(
-                new GridFormGroup(
-                    new GridFormRow( new GridFormCol( array(
-                        new InputHidden( 'Id' ),
-                        new ButtonSubmitPrimary( 'Öffnen' )
-                    ) ) )
-                ),
-                null,
-                $B.'/Sphere/Management/Person/Staff/Detail'
-            );
+                $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Verwaltung')
+                );
 
-        }, self::getUrlBase() );
-        $View->setContent( new TableData( $PersonList ) );
+                array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+
+                    $_REQUEST['Id'] = $V->getId();
+                    $V->Option = new FormDefault(
+                        new GridFormGroup(
+                            new GridFormRow(new GridFormCol(array(
+                                new InputHidden('Id'),
+                                new ButtonSubmitPrimary('Öffnen')
+                            )))
+                        ),
+                        null,
+                        $B . '/Sphere/Management/Person/Staff/Detail'
+                    );
+
+                }, self::getUrlBase());
+                $View->setContent(new TableData($PersonList));
+            }
+        }
         $View->addButton( '/Sphere/Management/Person/Staff/Create', 'Mitarbeiter hinzufügen' );
         return $View;
     }
@@ -303,23 +332,33 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Sonstige' );
-        $PersonList = Management::servicePerson()->entityPersonAll();
-        array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName('Sonstige') !== false ) {
 
-            $_REQUEST['Id'] = $V->getId();
-            $V->Option = new FormDefault(
-                new GridFormGroup(
-                    new GridFormRow( new GridFormCol( array(
-                        new InputHidden( 'Id' ),
-                        new ButtonSubmitPrimary( 'Öffnen' )
-                    ) ) )
-                ),
-                null,
-                $B.'/Sphere/Management/Person/Others/Detail'
-            );
+            if (Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Sonstige')) !== false ) {
 
-        }, self::getUrlBase() );
-        $View->setContent( new TableData( $PersonList ) );
+
+                $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName('Sonstige')
+                );
+                array_walk($PersonList, function (TblPerson &$V, $I, $B) {
+
+                    $_REQUEST['Id'] = $V->getId();
+                    $V->Option = new FormDefault(
+                        new GridFormGroup(
+                            new GridFormRow(new GridFormCol(array(
+                                new InputHidden('Id'),
+                                new ButtonSubmitPrimary('Öffnen')
+                            )))
+                        ),
+                        null,
+                        $B . '/Sphere/Management/Person/Others/Detail'
+                    );
+
+                }, self::getUrlBase());
+                $View->setContent(new TableData($PersonList));
+            }
+        }
         $View->addButton( '/Sphere/Management/Person/Others/Create', 'Person hinzufügen' );
         return $View;
     }

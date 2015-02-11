@@ -50,7 +50,7 @@ abstract class EntityAction extends EntitySchema
             $V = $V->getServiceManagementPerson();
         } );
 
-        $EntityList = $tblAccountList;
+        $EntityList = array_filter($tblAccountList);
         return ( empty( $EntityList ) ? false : $EntityList );
     }
 
