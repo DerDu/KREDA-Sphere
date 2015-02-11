@@ -1,6 +1,7 @@
 <?php
 namespace KREDA\Sphere\Application\Management\Frontend\PersonalData;
 
+use KREDA\Sphere\Application\Gatekeeper\Gatekeeper;
 use KREDA\Sphere\Application\Management\Frontend\PersonalData\Student\PersonDetail as StudentPersonDetail;
 use KREDA\Sphere\Application\Management\Frontend\PersonalData\Summary\Summary;
 use KREDA\Sphere\Application\Management\Management;
@@ -87,7 +88,9 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Schüler' );
-        $PersonList = Management::servicePerson()->entityPersonAll();
+        $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+            Gatekeeper::serviceAccount()->entityAccountTypByName( 'Schüler' )
+        );
 
         array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
 
@@ -197,23 +200,29 @@ class PersonalData extends AbstractFrontend
         $View = new Stage();
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Lehrer' );
-        $PersonList = Management::servicePerson()->entityPersonAll();
-        array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
+        // $PersonList = Management::servicePerson()->entityPersonAll(); // Ersetzt durch:
+
+        $PersonList = Management::servicePerson()->entityPersonAllByAccountType(
+            Gatekeeper::serviceAccount()->entityAccountTypByName( 'Lehrer' )
+        );
+
+
+        array_walk($PersonList, function (TblPerson &$V, $I, $B) {
 
             $_REQUEST['Id'] = $V->getId();
             $V->Option = new FormDefault(
                 new GridFormGroup(
-                    new GridFormRow( new GridFormCol( array(
-                        new InputHidden( 'Id' ),
-                        new ButtonSubmitPrimary( 'Öffnen' )
-                    ) ) )
+                    new GridFormRow(new GridFormCol(array(
+                        new InputHidden('Id'),
+                        new ButtonSubmitPrimary('Öffnen')
+                    )))
                 ),
                 null,
-                $B.'/Sphere/Management/Person/Teacher/Detail'
+                $B . '/Sphere/Management/Person/Teacher/Detail'
             );
 
-        }, self::getUrlBase() );
-        $View->setContent( new TableData( $PersonList ) );
+        }, self::getUrlBase());
+        $View->setContent(new TableData($PersonList));
         $View->addButton( '/Sphere/Management/Person/Teacher/Create', 'Lehrer hinzufügen' );
         return $View;
     }
@@ -225,25 +234,26 @@ class PersonalData extends AbstractFrontend
     {
 
         $View = new Stage();
-        $View->setTitle( 'Personen' );
-        $View->setDescription( 'Sorgeberechtigte' );
+        $View->setTitle('Personen');
+        $View->setDescription('Sorgeberechtigte');
         $PersonList = Management::servicePerson()->entityPersonAll();
-        array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
+
+        array_walk($PersonList, function (TblPerson &$V, $I, $B) {
 
             $_REQUEST['Id'] = $V->getId();
             $V->Option = new FormDefault(
                 new GridFormGroup(
-                    new GridFormRow( new GridFormCol( array(
-                        new InputHidden( 'Id' ),
-                        new ButtonSubmitPrimary( 'Öffnen' )
-                    ) ) )
+                    new GridFormRow(new GridFormCol(array(
+                        new InputHidden('Id'),
+                        new ButtonSubmitPrimary('Öffnen')
+                    )))
                 ),
                 null,
-                $B.'/Sphere/Management/Person/Guardian/Detail'
+                $B . '/Sphere/Management/Person/Guardian/Detail'
             );
 
-        }, self::getUrlBase() );
-        $View->setContent( new TableData( $PersonList ) );
+        }, self::getUrlBase());
+        $View->setContent(new TableData($PersonList));
         $View->addButton( '/Sphere/Management/Person/Guardian/Create', 'Sorgeberechtigte hinzufügen' );
         return $View;
     }
@@ -258,6 +268,7 @@ class PersonalData extends AbstractFrontend
         $View->setTitle( 'Personen' );
         $View->setDescription( 'Verwaltung' );
         $PersonList = Management::servicePerson()->entityPersonAll();
+
         array_walk( $PersonList, function ( TblPerson &$V, $I, $B ) {
 
             $_REQUEST['Id'] = $V->getId();

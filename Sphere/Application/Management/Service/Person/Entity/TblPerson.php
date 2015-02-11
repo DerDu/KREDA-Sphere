@@ -17,7 +17,7 @@ use KREDA\Sphere\Common\AbstractEntity;
 class TblPerson extends AbstractEntity
 {
 
-    const ATTR_PERSON_TYPE = 'tblPersonType';
+    const ATTR_TBL_PERSON_TYPE = 'tblPersonType';
 
     const ATTR_SALUTATION = 'Salutation';
     const ATTR_FIRST_NAME = 'FirstName';

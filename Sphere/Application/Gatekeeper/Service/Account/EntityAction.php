@@ -122,6 +122,20 @@ abstract class EntityAction extends EntitySchema
     }
 
     /**
+     * @param TblAccountTyp $tblAccountTyp
+     *
+     * @return bool|Entity\TblAccount[]
+     */
+    protected function entityAccountAllByType( TblAccountTyp $tblAccountTyp )
+    {
+
+        $EntityList = $this->getEntityManager()->getEntity( 'TblAccount' )->findBy( array(
+            TblAccount::ATTR_TBL_ACCOUNT_TYP => $tblAccountTyp->getId()
+        ) );
+        return ( empty( $EntityList ) ? false : $EntityList );
+    }
+
+    /**
      * @param integer $Id
      *
      * @return bool|TblAccountTyp
@@ -153,6 +167,7 @@ abstract class EntityAction extends EntitySchema
                 TblAccountTyp::ATTR_NAME => $Name
             ) );
         self::$EntityAccountTypByNameCache[$Name] = $Entity;
+
         return ( null === $Entity ? false : $Entity );
     }
 

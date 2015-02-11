@@ -2,6 +2,7 @@
 namespace KREDA\Sphere\Application\Management\Service;
 
 use KREDA\Sphere\Application\Gatekeeper\Gatekeeper;
+use KREDA\Sphere\Application\Gatekeeper\Service\Account\Entity\TblAccountTyp;
 use KREDA\Sphere\Application\Gatekeeper\Service\Consumer\Entity\TblConsumer;
 use KREDA\Sphere\Application\Management\Service\Person\Entity\TblPerson;
 use KREDA\Sphere\Application\Management\Service\Person\EntityAction;
@@ -59,6 +60,16 @@ class Person extends EntityAction
 
         return parent::entityPersonAll();
     }
+
+    /**
+     * @param TblAccountTyp $tblAccountTyp
+     * @return bool|TblPerson[]
+     */
+    public function entityPersonAllByAccountType(TblAccountTyp $tblAccountTyp )
+    {
+        return parent::entityPersonAllByAccountType($tblAccountTyp);
+    }
+
 
     /**
      * @param AbstractForm $View

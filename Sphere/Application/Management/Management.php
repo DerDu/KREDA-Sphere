@@ -219,6 +219,9 @@ class Management extends AbstractApplication
         return Period::guiPeriod();
     }
 
+    /**
+     * @return Mission
+     */
     public function guiEducationMission()
     {
 

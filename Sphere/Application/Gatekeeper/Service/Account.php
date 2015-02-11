@@ -393,6 +393,15 @@ class Account extends EntityAction
     }
 
     /**
+     * @param TblAccountTyp $tblAccountTyp
+     * @return bool|TblAccount[]
+     */
+    public function entityAccountAllByType(TblAccountTyp $tblAccountTyp)
+    {
+        return parent::entityAccountAllByType($tblAccountTyp);
+    }
+
+    /**
      * @param integer $Id
      *
      * @return bool|TblAccountTyp

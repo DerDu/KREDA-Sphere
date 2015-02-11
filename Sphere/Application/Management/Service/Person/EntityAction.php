@@ -1,6 +1,9 @@
 <?php
 namespace KREDA\Sphere\Application\Management\Service\Person;
 
+use KREDA\Sphere\Application\Gatekeeper\Gatekeeper;
+use KREDA\Sphere\Application\Gatekeeper\Service\Account\Entity\TblAccount;
+use KREDA\Sphere\Application\Gatekeeper\Service\Account\Entity\TblAccountTyp;
 use KREDA\Sphere\Application\Management\Service\Person\Entity\TblPerson;
 use KREDA\Sphere\Application\System\System;
 
@@ -31,6 +34,23 @@ abstract class EntityAction extends EntitySchema
     {
 
         $EntityList = $this->getEntityManager()->getEntity( 'TblPerson' )->findAll();
+        return ( empty( $EntityList ) ? false : $EntityList );
+    }
+
+    /**
+     * @param TblAccountTyp $tblAccountTyp
+     *
+     * @return bool|TblPerson[]
+     */
+    protected function entityPersonAllByAccountType( TblAccountTyp $tblAccountTyp )
+    {
+        $tblAccountList = Gatekeeper::serviceAccount()->entityAccountAllByType( $tblAccountTyp );
+
+        array_walk( $tblAccountList, function( TblAccount &$V ){
+            $V = $V->getServiceManagementPerson();
+        } );
+
+        $EntityList = $tblAccountList;
         return ( empty( $EntityList ) ? false : $EntityList );
     }
 
