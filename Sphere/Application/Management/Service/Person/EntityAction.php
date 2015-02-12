@@ -44,11 +44,17 @@ abstract class EntityAction extends EntitySchema
      */
     protected function entityPersonAllByAccountType( TblAccountTyp $tblAccountTyp )
     {
-        $tblAccountList = Gatekeeper::serviceAccount()->entityAccountAllByType( $tblAccountTyp );
 
-        array_walk( $tblAccountList, function( TblAccount &$V ){
-            $V = $V->getServiceManagementPerson();
-        } );
+        $tblAccountList = Gatekeeper::serviceAccount()->entityAccountAllByType( $tblAccountTyp );
+        if ($tblAccountList === false) {
+
+            $tblAccountList = array(null);
+        }else {
+
+            array_walk( $tblAccountList, function( TblAccount &$V ){
+                $V = $V->getServiceManagementPerson();
+            } );
+        }
 
         $EntityList = array_filter($tblAccountList);
         return ( empty( $EntityList ) ? false : $EntityList );
