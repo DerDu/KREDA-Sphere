@@ -1,6 +1,7 @@
 <?php
 namespace KREDA\Sphere\Application\Management;
 
+use KREDA\Sphere\Application\Gatekeeper\Gatekeeper;
 use KREDA\Sphere\Application\Gatekeeper\Service\Consumer\Entity\TblConsumer;
 use KREDA\Sphere\Application\Management\Frontend\Campus\Campus;
 use KREDA\Sphere\Application\Management\Frontend\Group\Group;
@@ -176,6 +177,31 @@ class Management extends AbstractApplication
     {
 
         return Service\Person::getApi( $tblConsumer );
+    }
+
+    /**
+     * @param $Person
+     * @return int
+     */
+    public static function PersonCount($Person)
+    {
+
+        if (Gatekeeper::serviceAccount()->entityAccountTypByName($Person) !== false ) {
+
+            if ((Management::servicePerson()->entityPersonAllByAccountType(
+                    Gatekeeper::serviceAccount()->entityAccountTypByName($Person)) !== false)
+            ) {
+
+                $PersonCountNumber = count(Management::servicePerson()->entityPersonAllByAccountType(Gatekeeper::serviceAccount()->entityAccountTypByName($Person)));
+            } else {
+
+                $PersonCountNumber = 0;
+            }
+        }else{
+
+            $PersonCountNumber = 0;
+        }
+        return $PersonCountNumber;
     }
 
     /**
