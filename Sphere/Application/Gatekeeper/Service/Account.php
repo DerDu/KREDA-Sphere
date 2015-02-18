@@ -63,7 +63,14 @@ class Account extends EntityAction
         $tblAccountRole = $this->actionCreateAccountRole( 'Lehrkraft' );
         $tblAccountTyp = $this->actionCreateAccountTyp( 'Lehrer' );
         $tblConsumer = Gatekeeper::serviceConsumer()->entityConsumerBySuffix( 'EGE' );
-        $this->actionCreateAccount( 'Schubert', 'Micha', $tblAccountTyp, $tblAccountRole, null, null, $tblConsumer );
+        $this->actionCreateAccount( 'Schumacher', 'Michael', $tblAccountTyp, $tblAccountRole, null, null, $tblConsumer );
+        /**
+         * Create Ultimate User without Token: Sid
+         */
+        $tblAccountRole = $this->actionCreateAccountRole( 'System' );
+        $tblAccountTyp = $this->actionCreateAccountTyp( 'Schüler' );
+        $tblConsumer = Gatekeeper::serviceConsumer()->entityConsumerBySuffix( 'EGE' );
+        $this->actionCreateAccount( 'Sid', '', $tblAccountTyp, $tblAccountRole, null, null, $tblConsumer );
         /**
          * Create Management
          */

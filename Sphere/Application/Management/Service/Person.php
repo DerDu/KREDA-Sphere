@@ -39,6 +39,10 @@ class Person extends EntityAction
             $this->actionCreatePerson( 'Herr', 'Bernd', 'DAS', 'Brot', 'Kastenförmig', 'NA' ),
             Gatekeeper::serviceAccount()->entityAccountByUsername( 'Bernd' )
         );
+        Gatekeeper::serviceAccount()->executeChangePerson(
+            $this->actionCreatePerson( 'Herr', 'Michael', '', 'Schumacher', 'Männlich', '03.01.1969' ),
+            Gatekeeper::serviceAccount()->entityAccountByUsername( 'Schumacher' )
+        );
     }
 
     /**

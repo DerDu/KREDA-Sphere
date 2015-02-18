@@ -38,7 +38,7 @@ class Token extends EntityAction
             Gatekeeper::serviceAccount()->entityAccountByUsername( 'System' )
         );
         Gatekeeper::serviceAccount()->executeChangeToken( $tblToken,
-            Gatekeeper::serviceAccount()->entityAccountByUsername( 'Schubert' )
+            Gatekeeper::serviceAccount()->entityAccountByUsername( 'Schumacher' )
         );
     }
 
@@ -99,5 +99,4 @@ class Token extends EntityAction
         $Key = $YubiKey->parseKey( $Value );
         return $YubiKey->verifyKey( $Key );
     }
-
 }
